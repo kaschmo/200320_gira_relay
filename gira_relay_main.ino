@@ -25,9 +25,10 @@
  //SONOF Pinout
  // 14 = lowest on pin array (furthest away from button)
  // 0 = button
- // 13 = led
+ // 13 = led SONOFF
+ //2 LED NODEMCU
  uint16_t RELAY_IN_PIN = 14; 
- uint16_t LED_PIN = 13;
+ uint16_t LED_PIN = 2; //13
  uint16_t BUTTON_PIN = 0;
 
  
@@ -58,10 +59,62 @@
  //WebServer
  const char* sw_version = "gira_relay_main v2";
 
+//Declarations
+void send_bell_status();
+
+//interrupt function to handle gira ring
+ICACHE_RAM_ATTR void ring_on() {
+    if (ringing==0){
+        //only ring when not already in ringing mode (1,2)
+        ringing = 1;
+    }
+}
   //web server to provide sw version
   void handle_root() {
    //print sw version on root
-   httpServer.send(200, "text/plain", sw_version);
+   String html_code = String("<p>SW: ");
+   html_code += String(sw_version);
+   html_code += "</p><p>Ring Status: ";
+   html_code += String(ringing);
+   html_code += "</p>";
+   html_code += "<form action=\"/restart\" method=\"POST\"><input type=\"submit\" value=\"Restart\"></form>";
+   html_code += "<form action=\"/led\" method=\"POST\"><input type=\"submit\" value=\"Toggle LED\"></form>";
+   html_code += "<form action=\"/ring\" method=\"POST\"><input type=\"submit\" value=\"Ring\"></form>";
+   html_code += "<form action=\"/status\" method=\"POST\"><input type=\"submit\" value=\"Send Status\"></form>";
+
+
+   httpServer.send(200, "text/html", html_code);
+  }
+
+  void handle_restart() {                          // If a POST request is made to URI /reset
+    Serial.println("Restarting...");
+         
+    httpServer.sendHeader("Location","/");        // Add a header to respond with a new location for the browser to go to the home page again
+    httpServer.send(303);                         // Send it back to the browser with an HTTP status 303 (See Other) to redirect
+    ESP.restart(); 
+  }
+
+  void handleNotFound(){
+    httpServer.send(404, "text/plain", "404: Not found"); // Send HTTP status 404 (Not Found) when there's no handler for the URI in the request
+  }
+
+  void handle_led() {                          
+    digitalWrite(LED_PIN,!digitalRead(LED_PIN));
+         
+    httpServer.sendHeader("Location","/");        
+    httpServer.send(303);                         
+  }
+  void handle_ring() {                          
+    //do ring emulation
+    ring_on();
+    httpServer.sendHeader("Location","/");        
+    httpServer.send(303);                         
+  }
+  void handle_status() {                          
+    //send status
+    send_bell_status();
+    httpServer.sendHeader("Location","/");        
+    httpServer.send(303);                         
   }
 
  void setup_wifi() {
@@ -86,7 +139,13 @@
  
    httpUpdater.setup(&httpServer);
    httpServer.begin();
-   httpServer.on("/", handle_root);
+   httpServer.on("/", HTTP_GET, handle_root);     
+   httpServer.on("/restart", HTTP_POST, handle_restart);  
+   httpServer.on("/led", HTTP_POST, handle_led);
+   httpServer.on("/ring", HTTP_POST, handle_ring);
+   httpServer.on("/status", HTTP_POST, handle_status);
+   httpServer.onNotFound(handleNotFound);
+
  }
  
  //callback function for MQTT client
@@ -111,7 +170,7 @@
  
     if (!strcmp(cmnd, "status")) {
         Serial.print("Received status request. sending status");
-        send_status();
+        send_bell_status();
     }
     else if (!strcmp(cmnd, "reset")) {
         Serial.print(F("Reset requested. Resetting..."));
@@ -122,7 +181,7 @@
 
 
 //sends module status via MQTT
-void send_status()
+void send_bell_status()
  {
    char outTopic_status[50];
    char msg[50];
@@ -188,13 +247,7 @@ void send_status()
    }
  }
  
-//interrupt function to handle gira ring
-ICACHE_RAM_ATTR void ring_on() {
-    if (ringing==0){
-        //only ring when not already in ringing mode (1,2)
-        ringing = 1;
-    }
-}
+
 
 
  void setup() {
@@ -229,7 +282,7 @@ ICACHE_RAM_ATTR void ring_on() {
    client.setServer(mqtt_server, 1883);
    client.setCallback(callback);
  
-  
+    send_bell_status();
  }
  
  
@@ -266,7 +319,7 @@ ICACHE_RAM_ATTR void ring_on() {
     if(millis()-timer_update_state_count > timer_update_state) {
       //addLog_P(LOG_LEVEL_INFO, PSTR("Serial Timer triggerd."));
       timer_update_state_count=millis();
-      send_status();
+      send_bell_status();
     }
    
  }
