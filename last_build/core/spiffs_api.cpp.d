@@ -32,8 +32,8 @@
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/Stream.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/md5.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/debug.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/pins_arduino.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/../generic/common.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/pins_arduino.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/common.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/FSImpl.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/spiffs/spiffs.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/spiffs/spiffs_config.h \

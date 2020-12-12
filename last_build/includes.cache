@@ -1,13 +1,13 @@
 [
   {
-    "Sourcefile": "",
+    "Sourcefile": null,
     "Include": "",
     "Includepath": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266"
   },
   {
-    "Sourcefile": "",
+    "Sourcefile": null,
     "Include": "",
-    "Includepath": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu"
+    "Includepath": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic"
   },
   {
     "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp",
@@ -36,117 +36,82 @@
   },
   {
     "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp",
-    "Include": "Adafruit_BME280.h",
-    "Includepath": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/Adafruit_BME280_Library"
-  },
-  {
-    "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp",
-    "Include": "Adafruit_Sensor.h",
-    "Includepath": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/Adafruit_Unified_Sensor"
-  },
-  {
-    "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp",
-    "Include": "Wire.h",
-    "Includepath": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/Wire"
-  },
-  {
-    "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFi.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFiAP.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFiGeneric.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFiMulti.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFiSTA.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFiScan.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/WiFiClient.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/WiFiClientSecure.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/WiFiServer.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/WiFiUdp.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WebServer/src/ESP8266WebServer.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WebServer/src/Parsing.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266mDNS/ESP8266mDNS.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266HTTPUpdateServer/src/ESP8266HTTPUpdateServer.cpp",
     "Include": "",
-    "Includepath": ""
+    "Includepath": null
   },
   {
     "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/PubSubClient/src/PubSubClient.cpp",
     "Include": "",
-    "Includepath": ""
-  },
-  {
-    "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/Adafruit_BME280_Library/Adafruit_BME280.cpp",
-    "Include": "SPI.h",
-    "Includepath": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/SPI"
-  },
-  {
-    "Sourcefile": "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/Adafruit_BME280_Library/Adafruit_BME280.cpp",
-    "Include": "",
-    "Includepath": ""
-  },
-  {
-    "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/Wire/Wire.cpp",
-    "Include": "",
-    "Includepath": ""
-  },
-  {
-    "Sourcefile": "/Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/SPI/SPI.cpp",
-    "Include": "",
-    "Includepath": ""
+    "Includepath": null
   }
 ]

@@ -8,5 +8,5 @@
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/tools/sdk/include/c_types.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/twi.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/core_esp8266_features.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/pins_arduino.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/../generic/common.h
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/pins_arduino.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/common.h

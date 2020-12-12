@@ -25,8 +25,8 @@
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/uart.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/Esp.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/debug.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/pins_arduino.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/../generic/common.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/pins_arduino.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/common.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/flash_utils.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/MD5Builder.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/WString.h \

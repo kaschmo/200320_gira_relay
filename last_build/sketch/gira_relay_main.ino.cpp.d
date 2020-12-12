@@ -1,5 +1,6 @@
 /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp.o: \
  /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/gira_relay_main.ino.cpp \
+ /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/wifi_credentials.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/Arduino.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/stdlib_noniso.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/binary.h \
@@ -30,9 +31,8 @@
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/Stream.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/md5.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/debug.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/pins_arduino.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu/../generic/common.h \
- /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/last_build/sketch/wifi_credentials.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/pins_arduino.h \
+ /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/generic/common.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/ESP8266WiFi.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/include/wl_definitions.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/IPAddress.h \
@@ -60,7 +60,4 @@
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266/Udp.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266WiFi/src/include/slist.h \
  /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266HTTPUpdateServer/src/ESP8266HTTPUpdateServer.h \
- /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/PubSubClient/src/PubSubClient.h \
- /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/Adafruit_BME280_Library/Adafruit_BME280.h \
- /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/Adafruit_Unified_Sensor/Adafruit_Sensor.h \
- /Users/karsten/Library/Arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/Wire/Wire.h
+ /Users/karsten/Documents/00_Project_Support/10_arduino/Projects/libraries/PubSubClient/src/PubSubClient.h

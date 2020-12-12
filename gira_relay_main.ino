@@ -2,13 +2,13 @@
  * Gira relay integration
  * Sends and receives values via MQTT
  * 
- * GPIO In for 24V signal of gira bus coupler
  * Copyright K.Schmolders 03/2020
  */
 
 // wifi credentials stored externally and .gitignore
  //all wifi credential and MQTT Server importet through wifi_credential.h
  #include "wifi_credentials.h"
+ #include <Arduino.h>
 
  //required for MQTT
  #include <ESP8266WiFi.h>
@@ -19,7 +19,6 @@
  #include <ESP8266HTTPUpdateServer.h>
  //end OTA requirements
  #include <PubSubClient.h>
- #include <Adafruit_BME280.h>
  
  
  //TODO check SONOFF Pins
@@ -55,7 +54,16 @@
  //OTA
  ESP8266WebServer httpServer(80);
  ESP8266HTTPUpdateServer httpUpdater;
- 
+
+ //WebServer
+ const char* sw_version = "gira_relay_main v2";
+
+  //web server to provide sw version
+  void handle_root() {
+   //print sw version on root
+   httpServer.send(200, "text/plain", sw_version);
+  }
+
  void setup_wifi() {
    delay(10);
    // We start by connecting to a WiFi network
@@ -78,8 +86,8 @@
  
    httpUpdater.setup(&httpServer);
    httpServer.begin();
+   httpServer.on("/", handle_root);
  }
- 
  
  //callback function for MQTT client
  void callback(char* topic, byte* payload, unsigned int length) {
@@ -121,10 +129,13 @@ void send_status()
    //IP Address
    strcpy(outTopic_status,outTopic);
    strcat(outTopic_status,"ip_address");
-   
-   //ESP IP
-   WiFi.localIP().toString().toCharArray(msg,50);
+    WiFi.localIP().toString().toCharArray(msg,50);
    client.publish(outTopic_status,msg ); 
+
+  //Ring 0
+    strcpy(outTopic_status,outTopic);
+    strcat(outTopic_status,"ring");
+    client.publish(outTopic_status,"0"); 
  }
  
  //send Ring via MQTT
@@ -133,7 +144,7 @@ void send_status()
     char outTopic_status[50];
     char msg[50];
 
-    //GARAGE Door status
+    //bell status
     strcpy(outTopic_status,outTopic);
     strcat(outTopic_status,"ring");
     //dtostrf(garage_door_status,1,0,msg); 
@@ -146,10 +157,9 @@ void send_status()
     char outTopic_status[50];
     char msg[50];
 
-    //GARAGE Door status
+    //Bell status
     strcpy(outTopic_status,outTopic);
     strcat(outTopic_status,"ring");
-    //dtostrf(garage_door_status,1,0,msg); 
     client.publish(outTopic_status,"0" ); 
  
  }
@@ -179,15 +189,14 @@ void send_status()
  }
  
 //interrupt function to handle gira ring
-void ring_on() {
-    ringing = 1;
+ICACHE_RAM_ATTR void ring_on() {
+    if (ringing==0){
+        //only ring when not already in ringing mode (1,2)
+        ringing = 1;
+    }
 }
 
-//interrupt function to handle gira ring
-void ring_off() {
-    //not needed. rining flag is cancelled in loop
-}
- 
+
  void setup() {
    // Status message will be sent to the PC at 115200 baud
    Serial.begin(115200, SERIAL_8N1, SERIAL_TX_ONLY);
@@ -196,12 +205,23 @@ void ring_off() {
    timer_update_state_count=millis();
 
 
-   //TODO assign interrupt
    pinMode(RELAY_IN_PIN, INPUT);
-   attachInterrupt(digitalPinToInterrupt(RELAY_IN_PIN), ring_on, RISING);
+   //interrupt on relay pin. FALLING since using pull_up to 3.3. relay closes to GND. 
+   attachInterrupt(digitalPinToInterrupt(RELAY_IN_PIN), ring_on, FALLING);
    pinMode(BUTTON_PIN, INPUT);
    attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), ring_on, RISING);
     pinMode(LED_PIN, OUTPUT);
+    //LED is reverse. HIGH = OFF
+    digitalWrite(LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(LED_PIN, LOW);
+    delay(500);
+    digitalWrite(LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(LED_PIN, LOW);
+    delay(500);
+    digitalWrite(LED_PIN, HIGH);
+
     ringing=0;
  
    //WIFI and MQTT
@@ -231,7 +251,7 @@ void ring_off() {
         ringing=2;
         //send MQTT ring
         sendRingOn();
-        digitalWrite(LED_PIN, HIGH);
+        digitalWrite(LED_PIN, LOW); //LOW=ON
 
     }
     if(millis()-ring_timer > ring_duration && ringing==2) {
@@ -239,8 +259,14 @@ void ring_off() {
         ringing=0; 
         //send MQTT cancel
         sendRingOff();
-        digitalWrite(LED_PIN, LOW);
+        digitalWrite(LED_PIN, HIGH); //HIGH = OFF
 
+    }
+    //send status update via MQTT as configured
+    if(millis()-timer_update_state_count > timer_update_state) {
+      //addLog_P(LOG_LEVEL_INFO, PSTR("Serial Timer triggerd."));
+      timer_update_state_count=millis();
+      send_status();
     }
    
  }

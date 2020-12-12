@@ -1,15 +1,14 @@
 # 1 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino"
-# 1 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino"
 /*
  * Gira relay integration
  * Sends and receives values via MQTT
  * 
- * GPIO In for 24V signal of gira bus coupler
  * Copyright K.Schmolders 03/2020
  */
 
 // wifi credentials stored externally and .gitignore
  //all wifi credential and MQTT Server importet through wifi_credential.h
+# 11 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino" 2
 # 12 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino" 2
 
  //required for MQTT
@@ -21,7 +20,6 @@
 # 20 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino" 2
  //end OTA requirements
 # 22 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino" 2
-# 23 "/Users/karsten/Documents/00_Project_Support/10_arduino/Projects/200320_gira_relay/gira_relay_main.ino" 2
 
 
  //TODO check SONOFF Pins
@@ -58,6 +56,15 @@
  ESP8266WebServer httpServer(80);
  ESP8266HTTPUpdateServer httpUpdater;
 
+ //WebServer
+ const char* sw_version = "gira_relay_main v2";
+
+  //web server to provide sw version
+  void handle_root() {
+   //print sw version on root
+   httpServer.send(200, "text/plain", sw_version);
+  }
+
  void setup_wifi() {
    delay(10);
    // We start by connecting to a WiFi network
@@ -80,8 +87,8 @@
 
    httpUpdater.setup(&httpServer);
    httpServer.begin();
+   httpServer.on("/", handle_root);
  }
-
 
  //callback function for MQTT client
  void callback(char* topic, byte* payload, unsigned int length) {
@@ -123,10 +130,13 @@ void send_status()
    //IP Address
    strcpy(outTopic_status,outTopic);
    strcat(outTopic_status,"ip_address");
-
-   //ESP IP
-   WiFi.localIP().toString().toCharArray(msg,50);
+    WiFi.localIP().toString().toCharArray(msg,50);
    client.publish(outTopic_status,msg );
+
+  //Ring 0
+    strcpy(outTopic_status,outTopic);
+    strcat(outTopic_status,"ring");
+    client.publish(outTopic_status,"0");
  }
 
  //send Ring via MQTT
@@ -135,7 +145,7 @@ void send_status()
     char outTopic_status[50];
     char msg[50];
 
-    //GARAGE Door status
+    //bell status
     strcpy(outTopic_status,outTopic);
     strcat(outTopic_status,"ring");
     //dtostrf(garage_door_status,1,0,msg); 
@@ -148,10 +158,9 @@ void send_status()
     char outTopic_status[50];
     char msg[50];
 
-    //GARAGE Door status
+    //Bell status
     strcpy(outTopic_status,outTopic);
     strcat(outTopic_status,"ring");
-    //dtostrf(garage_door_status,1,0,msg); 
     client.publish(outTopic_status,"0" );
 
  }
@@ -181,14 +190,13 @@ void send_status()
  }
 
 //interrupt function to handle gira ring
-void ring_on() {
-    ringing = 1;
+__attribute__((section(".iram.text"))) void ring_on() {
+    if (ringing==0){
+        //only ring when not already in ringing mode (1,2)
+        ringing = 1;
+    }
 }
 
-//interrupt function to handle gira ring
-void ring_off() {
-    //not needed. rining flag is cancelled in loop
-}
 
  void setup() {
    // Status message will be sent to the PC at 115200 baud
@@ -198,12 +206,23 @@ void ring_off() {
    timer_update_state_count=millis();
 
 
-   //TODO assign interrupt
    pinMode(RELAY_IN_PIN, 0x00);
-   attachInterrupt((((RELAY_IN_PIN) < 16)? (RELAY_IN_PIN) : -1), ring_on, 0x01);
+   //interrupt on relay pin. FALLING since using pull_up to 3.3. relay closes to GND. 
+   attachInterrupt((((RELAY_IN_PIN) < 16)? (RELAY_IN_PIN) : -1), ring_on, 0x02);
    pinMode(BUTTON_PIN, 0x00);
    attachInterrupt((((BUTTON_PIN) < 16)? (BUTTON_PIN) : -1), ring_on, 0x01);
     pinMode(LED_PIN, 0x01);
+    //LED is reverse. HIGH = OFF
+    digitalWrite(LED_PIN, 0x1);
+    delay(500);
+    digitalWrite(LED_PIN, 0x0);
+    delay(500);
+    digitalWrite(LED_PIN, 0x1);
+    delay(500);
+    digitalWrite(LED_PIN, 0x0);
+    delay(500);
+    digitalWrite(LED_PIN, 0x1);
+
     ringing=0;
 
    //WIFI and MQTT
@@ -233,7 +252,7 @@ void ring_off() {
         ringing=2;
         //send MQTT ring
         sendRingOn();
-        digitalWrite(LED_PIN, 0x1);
+        digitalWrite(LED_PIN, 0x0); //LOW=ON
 
     }
     if(millis()-ring_timer > ring_duration && ringing==2) {
@@ -241,8 +260,14 @@ void ring_off() {
         ringing=0;
         //send MQTT cancel
         sendRingOff();
-        digitalWrite(LED_PIN, 0x0);
+        digitalWrite(LED_PIN, 0x1); //HIGH = OFF
 
+    }
+    //send status update via MQTT as configured
+    if(millis()-timer_update_state_count > timer_update_state) {
+      //addLog_P(LOG_LEVEL_INFO, PSTR("Serial Timer triggerd."));
+      timer_update_state_count=millis();
+      send_status();
     }
 
  }
