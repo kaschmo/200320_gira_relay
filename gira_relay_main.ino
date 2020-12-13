@@ -28,7 +28,7 @@
  // 13 = led SONOFF
  //2 LED NODEMCU
  uint16_t RELAY_IN_PIN = 14; 
- uint16_t LED_PIN = 2; //13
+ uint16_t LED_PIN = 13; //13
  uint16_t BUTTON_PIN = 0;
 
  
